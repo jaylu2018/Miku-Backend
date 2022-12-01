@@ -42,14 +42,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg2',
     'apps.users',
-    'apps.plans',
-    'apps.projects',
-    'apps.cases',
-    'apps.configs',
-    'apps.suits',
-    'apps.interfaces',
-    'apps.envs',
-    'apps.menus',
 ]
 
 MIDDLEWARE = [
