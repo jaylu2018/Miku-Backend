@@ -16,10 +16,8 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-# 添加apps目录到python的里去
-sys.path.insert(0, os.path.join(BASE_DIR, 'apps/'))
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
+sys.path.insert(0, os.path.join(BASE_DIR)) # 把项目根目录插入到sys.path的最前面
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps/')) # 把apps目录也插入到sys.path中，可以直接导入应用
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-*vtwi&^!+odrdn)aa0yprn*1n$f3^rn*59(8aq_jc1j#%f!_+8'
@@ -207,41 +205,33 @@ REST_FRAMEWORK = {
     # ],
 }
 LOGGING = {
-    # 版本号
-    'version': 1,
-    # 指定是否禁用已经存在的日志器
-    'disable_existing_loggers': False,
+    'version': 1,  # 版本号
+    'disable_existing_loggers': False,  # 是否禁用已经存在的日志器
     # 日志的显示格式
     'formatters': {
-        # simple为简化版格式的日志
-        'simple': {
+        'simple': {  # simple为简化版格式的日志
             'format': '%(asctime)s - [%(levelname)s] - [msg]%(message)s'
         },
-        # verbose为详细格式的日志
-        'verbose': {
+        'verbose': {  # verbose为详细格式的日志
             'format': '%(asctime)s - [%(levelname)s] - %(name)s - [msg]%(message)s - [%(filename)s:%(lineno)d ]'
         },
     },
-    # filters指定日志过滤器
-    'filters': {
-        'require_debug_true': {
+    'filters': {  # filters日志过滤器
+        'require_debug_true': {  # require_debug_true为只有在DEBUG=True时才显示的日志
             '()': 'django.utils.log.RequireDebugTrue',
         },
     },
-    # handlers指定日志输出渠道
-    'handlers': {
-        # console指定输出到控制台
-        'console': {
-            'level': 'DEBUG',
+    'handlers': {  # handlers指定日志输出渠道
+        'console': {  # console指定输出到控制台
+            'level': 'INFO',  # 日志级别
             'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
             'formatter': 'simple'
         },
-        # 日志保存到日志文件
-        'file': {
-            'level': 'DEBUG',
+
+        'file': {  # file指定输出到文件
+            'level': 'INFO',  # 日志级别
             'class': 'logging.handlers.RotatingFileHandler',
-            # 指定存放日志文件的所处路径
             'filename': os.path.join(BASE_DIR, "logs/test.log"),  # 日志文件的位置
             'maxBytes': 100 * 1024 * 1024,
             'backupCount': 10,
@@ -249,12 +239,11 @@ LOGGING = {
             'encoding': 'utf-8'
         },
     },
-    # 定义日志器
-    # 'loggers': {
-    #     'mytest': {  # 定义了一个名为mytest的日志器
-    #         'handlers': ['console', 'file'],
-    #         'propagate': True,
-    #         'level': 'DEBUG',  # 日志器接收的最低日志级别
-    #     },
-    # }
+    'loggers': {  # loggers指定日志器
+        'mytest': {  # 定义了一个名为mytest的日志器
+            'handlers': ['console', 'file'],
+            'propagate': True,  # 是否传递给父级日志器
+            'level': 'INFO',  # 日志器接收的最低日志级别
+        },
+    }
 }
