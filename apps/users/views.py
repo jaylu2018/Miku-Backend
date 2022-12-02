@@ -8,16 +8,10 @@ from utils.permissions import SuperUserPermission
 
 
 class LoginView(TokenObtainPairView):
-    """
-    登录视图
-    """
     serializer_class = MyTokenSerializer
 
 
 class MyTokenRefreshView(TokenRefreshView):
-    """
-    token刷新视图
-    """
     serializer_class = MyTokenRefreshSerializer
 
 
