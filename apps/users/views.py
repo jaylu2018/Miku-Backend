@@ -1,6 +1,6 @@
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from users.serializers import MyTokenSerializer, MyTokenRefreshSerializer
+from .serializers import MyTokenSerializer, MyTokenRefreshSerializer
 
 
 class LoginView(TokenObtainPairView):
