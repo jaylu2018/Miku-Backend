@@ -15,7 +15,11 @@ class User(AbstractUser):
     继承原有的用户模型，添加手机号字段
     """
     mobile = models.CharField(
-        max_length=11, unique=True, validators=[validate_mobile], verbose_name='手机号', help_text='手机号',
+        max_length=11,
+        unique=True,
+        help_text='手机号',
+        verbose_name='手机号',
+        validators=[validate_mobile],
         error_messages={'unique': '手机号已存在'}
     )
 
