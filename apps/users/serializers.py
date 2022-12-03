@@ -1,23 +1,8 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
+
 
 from apps.users.models import User
-
-
-class MyTokenSerializer(TokenObtainPairSerializer):
-
-    def validate(self, attrs):
-        data = super().validate(attrs)
-        data['token'] = data.pop('access')
-        return data
-
-
-class MyTokenRefreshSerializer(TokenRefreshSerializer):
-    def validate(self, attrs):
-        data = super().validate(attrs)
-        data['token'] = data.pop('access')
-        return data
 
 
 class RegisterSerializer(serializers.ModelSerializer):

@@ -90,7 +90,7 @@ DATABASES = {
         # 指定数据库的连接端口号，默认为3306,
         'PORT': 3306,
         'USER': 'root',
-        'PASSWORD': '123456',
+        'PASSWORD': 'root',
     }
 }
 
