@@ -45,7 +45,6 @@ class RegisterView(CreateAPIView):
 class UserViewSet(ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all().order_by('-date_joined')  # 按时间倒序
-
     # permission_classes = [SuperUserPermission]
 
     def retrieve(self, request, *args, **kwargs):

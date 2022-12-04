@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'drf_yasg2',
     'apps.users.apps.UsersConfig',
+    'apps.rbac.apps.RbacConfig',
 ]
 
 MIDDLEWARE = [
