@@ -14,7 +14,7 @@ class Dept(BaseModel):
     email = models.EmailField(max_length=32, verbose_name="邮箱", null=True, blank=True, help_text="邮箱")
     desc = models.CharField(max_length=50, blank=True, null=True, verbose_name="描述")
     status = models.BooleanField(default=True, verbose_name="部门状态", null=True, blank=True, help_text="部门状态")
-    pid = models.ForeignKey("self", null=True, blank=True, on_delete=models.SET_NULL, verbose_name="上级部门")
+    parent = models.ForeignKey("self", null=True, blank=True, on_delete=models.CASCADE, verbose_name="上级部门")
 
     class Meta:
         db_table = 'tb_dept'  # 指定模型对应的表名

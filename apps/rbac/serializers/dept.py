@@ -6,7 +6,14 @@ class DeptSerializer(serializers.ModelSerializer):
     """
     组织架构序列化
     """
-    # type = serializers.ChoiceField(choices=Dept.organization_type_choices, default='department')
+    children = serializers.SerializerMethodField()
+
+    def get_children(self, obj: Dept):
+        departments = Dept.objects.filter(parent_id=obj.id)
+        tree = []
+        for department in departments:
+            tree.append(Dept.objects.filter(id=department.id).values()[0])
+        return tree
 
     class Meta:
         model = Dept
