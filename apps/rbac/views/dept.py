@@ -13,26 +13,30 @@ class DeptViewSet(ModelViewSet):
     serializer_class = DeptSerializer
     queryset = Dept.objects.all().order_by('-update_time')  # 按时间倒序
 
-    # def delete_children_is_null(self, data):
-    #     """递归删除children为空的数据"""
-    #     for item in data:
-    #         if item['children']:
-    #             self.delete_children_is_null(item['children'])
-    #         else:
-    #             del item['children']
-    #     return data
+    def delete_bad_key(self, badKey, dictionary):
+        for key in list(dictionary.keys()):
+            if key == badKey and dictionary[key] == []:
+                del dictionary[key]
+            elif type(dictionary[key]) == dict:
+                self.delete_bad_key(badKey, dictionary[key])
+            elif type(dictionary[key]) == list:
+                for item in dictionary[key]:
+                    self.delete_bad_key(badKey, item)
+        return dictionary
 
     def serialize_tree(self, queryset):
+        data = []
         for obj in queryset:
-            data = self.get_serializer(obj).data
-            data['children'] = self.serialize_tree(obj.children.all())
-            yield data
+            datas = self.get_serializer(obj).data
+            datas['children'] = self.serialize_tree(obj.children.all())
+            data.append(datas)
+        return data
 
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset().filter(parent=None)
-        data = self.serialize_tree(queryset)
-        # data = self.delete_children_is_null(data)
-        return VbenResponse(data=data, msg='ok', code=0, status=status.HTTP_201_CREATED, type_res='success')
+        data_list = self.serialize_tree(queryset)
+        datas = [self.delete_bad_key('children', data) for data in data_list]
+        return VbenResponse(data=datas, msg='ok', code=0, status=status.HTTP_201_CREATED, type_res='success')
 
     # def list(self, request, *args, **kwargs):
     #     datas = super().list(request, *args, **kwargs).data
